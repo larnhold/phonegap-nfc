@@ -31,12 +31,9 @@ import android.nfc.TagLostException;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.nfc.tech.TagTechnology;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCompleteCallback {
     private static final String REGISTER_MIME_TYPE = "registerMimeType";
@@ -485,8 +482,7 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
         if (pendingIntent == null) {
             Activity activity = getActivity();
             Intent intent = new Intent(activity, activity.getClass());
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
+
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_MUTABLE);
@@ -494,6 +490,7 @@ public class NfcPlugin extends CordovaPlugin implements NfcAdapter.OnNdefPushCom
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
             }
+
         }
     }
 
